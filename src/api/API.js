@@ -2,15 +2,16 @@ import axios from 'axios'
 import config from './config'
 class API {
   getList (param) {
-    config.data.Method = 'get'
-    config.data.CustData.Data = param
-    return axios.post('/topics', {}, config)
+    console.log(config)
+    config.Method = 'get'
+    config.Data = param
+    return axios.get('/topics', config)
   }
   getCurrency (param) {
     console.log(config)
-    config.data.Method = 'get'
-    config.data.CustData.Data = param
-    return axios.post('/Router', {}, config)
+    config.Method = 'get'
+    config.Data = param
+    return axios.get('/Router', config)
   }
 }
 

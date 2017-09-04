@@ -1,25 +1,10 @@
 <template>
   <div class="hello">
-    <ul>
-
-    </ul>
-    <!-- <h1>{{ msg }}</h1>
-      <h2>Essential Links</h2>
-      <ul>
-        <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-        <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-        <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-        <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-        <br>
-        <li><a href="http://vuejs-templates.github.io/webpack/" target="_blank">Docs for This Template</a></li>
-      </ul>
-      <h2>Ecosystem</h2>
-      <ul>
-        <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-        <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-        <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-        <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-      </ul> -->
+   <ul id="example-1">
+      <li v-for="item in dataList" :key="item.id">
+      {{ item.title }}
+  </li>
+   </ul>
   </div>
 </template>
 
@@ -28,17 +13,17 @@ import API from '../api/API'
 const api = new API()
 export default {
   name: 'hello',
-
   beforeMount () {
+    let that = this
     let listParam = { 'page': 0, 'tab': 'ask', 'limit': 10, 'mdrender': true }
     // 获取信息列表
     let response = api.getList(listParam)
-    console.log(response)
 
     response.then(function (res) {
-      // let data = JSON.parse(res.data.DataJson).Data.datalist;
-      // Indicator.close();
-      // that.list = data;
+      if (res.data.success) {
+        that.dataList = res.data.data
+      }
+      console.log(that.dataList)
     })
       .catch(function (err) {
         console.log(err)
@@ -46,7 +31,7 @@ export default {
   },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      dataList: []
     }
   }
 }
